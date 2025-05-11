@@ -7,10 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 if __name__ == '__main__':
-    data = './data'
-    out = './output'
-    file_name = 'machine-data.csv'
-    path = os.path.join(data, file_name)
+    output = 
+    path = 
     seed = 123857
 
     df = pd.read_csv(path)
@@ -31,7 +29,7 @@ if __name__ == '__main__':
 
     X = df[in_feat]
     y = df[out_feat]
-
+    #using the perceptron model
     model = Perceptron()
 
     # Train/test split
@@ -69,3 +67,13 @@ if __name__ == '__main__':
     print(accuracy_score(y_test, preds))
     print(confusion_matrix(y_test, preds))
     print(classification_report(y_test, preds))
+
+    # confusion matrix
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=model.classes_, yticklabels=model.classes_)
+    plt.xlabel('predition')
+    plt.ylabel('actaul')
+    plt.title('coff matrix')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output, 'confusion_matrix.png'))
+    plt.close()
+
