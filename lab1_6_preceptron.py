@@ -7,8 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 if __name__ == '__main__':
-    output = r'C:\Users\devlu\Downloads\DPL\DPL\labs\output\week2_output'
-    path = r'C:\Users\devlu\Downloads\DPL\DPL\labs\data\tetuan-power.csv'
+    output = your dir
+    path = your dir
     seed = 123857
 
     df = pd.read_csv(path)
@@ -62,6 +62,7 @@ if __name__ == '__main__':
     preds = model.predict(X_test)
 
     print(preds[:2])
+   +print(model.score(X_test, y_test))
     print(f"R² Score: {r2_score(y_test, preds):.4f}")
     print(f"MSE: {mean_squared_error(y_test, preds):.2f}")
     print(f"MAE: {mean_absolute_error(y_test, preds):.2f}")
