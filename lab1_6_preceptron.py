@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import Perceptron
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 if __name__ == '__main__':
     output = r'C:\Users\devlu\Downloads\DPL\DPL\labs\output\week2_output'
@@ -55,8 +55,13 @@ if __name__ == '__main__':
     plt.close()
 
     #training model stuff
-    model = MLPRegressor(random_state=seed)
+    model = MLPRegressor(random_state=seed,max_iter=1000)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
-    model.fit(X_train, y_train)
-    print(model.predict(X_test[:2]))
-    print(model.score(X_test,y_test))
+    model.fit(X_train, y_train.values.ravel())
+
+    preds = model.predict(X_test)
+
+    print(preds[:2])
+    print(f"R² Score: {r2_score(y_test, preds):.4f}")
+    print(f"MSE: {mean_squared_error(y_test, preds):.2f}")
+    print(f"MAE: {mean_absolute_error(y_test, preds):.2f}")
