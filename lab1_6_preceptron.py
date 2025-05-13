@@ -53,3 +53,10 @@ if __name__ == '__main__':
     plt.tight_layout()
     plt.savefig(os.path.join(output, 'erp_histo.png'))
     plt.close()
+
+    #training model stuff
+    model = MLPRegressor(random_state=seed)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
+    model.fit(X_train, y_train)
+    print(model.predict(X_test[:2]))
+    print(model.score(X_test,y_test))
