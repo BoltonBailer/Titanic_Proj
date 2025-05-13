@@ -7,54 +7,36 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 if __name__ == '__main__':
-    output = 
-    path = 
+    output = r'C:\Users\devlu\Downloads\DPL\DPL\labs\output\week2_output'
+    path = r'C:\Users\devlu\Downloads\DPL\DPL\labs\data\tetuan-power.csv'
     seed = 123857
 
     df = pd.read_csv(path)
-    
-    # drop nulls
-    df.dropna(inplace=True)
 
-    # Only numbers
-    numeric_df = df.select_dtypes(include='number')
+    df.info()
 
-    # set erp to three diff labels 
-    df['erp_class'] = pd.qcut(df['erp'], q=3, labels=['low', 'medium', 'high'])
+    #the data is complete, no nulls, the data is in floats, no weird symbols or commas.
+    #input = Temperature,Humidity,Wind Speed,general diffuse flows,diffuse flows
+    #output = Zone 1 Power Consumption
 
-    # input/output
+    #drop no numeric
+    df = df.drop(["DateTime","Zone 2  Power Consumption","Zone 3  Power Consumption"], axis=1)
 
-    in_feat = numeric_df.columns.drop('erp')
-    out_feat = 'erp_class'
+    in_feat = (["Temperature","Humidity","Wind Speed","general diffuse flows","diffuse flows"])
+    out_feat = (["Zone 1 Power Consumption"])
 
     X = df[in_feat]
     y = df[out_feat]
-    #using the perceptron model
-    model = Perceptron()
 
-    # Train/test split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
-    model.fit(X_train, y_train)
-
-    # Histogram
+    #TODO:Corr plot
     plt.figure()
-    sns.histplot(df['erp'], bins=30)
-    plt.title('erp histo')
-    plt.xlabel('erp')
-    plt.ylabel('Freq')
-    plt.tight_layout()
-    plt.savefig(os.path.join(output, 'erp_histo.png'))
-    plt.close()
-
-    # Heatmap
-    plt.figure()
-    sns.heatmap(numeric_df.corr(), annot=True, cmap='coolwarm')
+    sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
     plt.title('Corr map')
     plt.tight_layout()
     plt.savefig(os.path.join(output, 'corr_heatmap.png'))
     plt.close()
 
-    # Collinearity
+    #TODO:Collinearity plot
     plt.figure()
     sns.heatmap(X.corr(), annot=True, cmap='coolwarm')
     plt.title('collinear')
@@ -62,18 +44,12 @@ if __name__ == '__main__':
     plt.savefig(os.path.join(output, 'collinearity_plot.png'))
     plt.close()
 
-    # eval model
-    preds = model.predict(X_test)
-    print(accuracy_score(y_test, preds))
-    print(confusion_matrix(y_test, preds))
-    print(classification_report(y_test, preds))
-
-    # confusion matrix
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=model.classes_, yticklabels=model.classes_)
-    plt.xlabel('predition')
-    plt.ylabel('actaul')
-    plt.title('coff matrix')
+    #TODO:Draw a histogram of output feat
+    plt.figure()
+    sns.histplot(y)
+    plt.title('Zone 1 Power Consumption')
+    plt.xlabel('Zone 1 Power Consumption')
+    plt.ylabel('Freq')
     plt.tight_layout()
-    plt.savefig(os.path.join(output, 'confusion_matrix.png'))
+    plt.savefig(os.path.join(output, 'erp_histo.png'))
     plt.close()
-
