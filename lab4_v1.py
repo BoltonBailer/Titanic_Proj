@@ -14,8 +14,8 @@ import time
 if __name__ == '__main__':
 
     # load trial info
-    output = r'C:\Users\devlu\Downloads\DPL\DPL\labs\output\week4_output'
-    path = r'C:\Users\devlu\Downloads\DPL\DPL\labs\output\week4_output\trials.csv'
+    output = r''
+    path = r''
     trials = pd.read_csv(path)
 
     for i, row in trials.iterrows():
